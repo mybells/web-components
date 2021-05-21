@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        p {
+            color: blueviolet;
+        }
+        
+        header::part(span) {
+            color: red;
+        }
+    </style>
+    <p>不会影响shadow样式</p>
+    <script>
+        const header = document.createElement('header');
+        const shadowRoot = header.attachShadow({mode: 'closed'});// header.shadowRoot === null
+        // const shadowRoot = header.attachShadow({mode: 'open'});// header.shadowRoot === shadowRoot   #document-fragment
+        shadowRoot.innerHTML = '<p>Hello Shadow DOM</p><span part="span">span part</span>';
+        document.querySelector('body').append(header);// shadowRoot.host === header
+    </script>
+</body>
+</html>

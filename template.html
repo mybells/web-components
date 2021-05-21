@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        p{color: blueviolet;}
+    </style>
+    
+    
+    <template id="my-paragraph">
+        <style>
+            p{color: red;}
+        </style>
+        <p>My paragraph</p>
+        <slot name="my-text">My default text</slot>
+    </template>
+    
+    
+    <my-paragraph>
+        <p slot="my-text">slot text</p>
+    </my-paragraph>
+    
+    
+    <script>
+        customElements.define('my-paragraph',
+            class extends HTMLElement {
+                constructor() {
+                    super();
+                    let template = document.getElementById('my-paragraph');
+                    let templateContent = template.content.cloneNode(true);
+                    this.attachShadow({mode: 'open'}).appendChild(templateContent);
+                }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        button-counter::part(counter) {
+            color: red;
+        }
+    </style>
+    <template id="button-counter">
+        <span id="counter" part="counter"></span>
+        <button id="button"></button>
+    </template>
+    <button-counter counter="0" label="增加1"></button-counter>
+    <script>
+        document.querySelector('button-counter').buttonCounter=(val)=>{}
+        
+        // document.querySelector('button-counter').addEventListener('test', (val)=>{
+        //     console.log(val.detail.counter);
+        // })
+        
+        class ButtonCounter extends HTMLElement {
+            constructor() {
+                super();
+                
+                let shadowRoot = this.attachShadow({mode: 'open'});
+                let el = document.querySelector('#button-counter').content.cloneNode(true);
+                shadowRoot.appendChild(el);
+                
+                this.$counter = shadowRoot.querySelector('#counter');
+                this.$button = shadowRoot.querySelector('#button');
+                this.$button.addEventListener('click', () => {
+                    this.counter++;
+                    this.buttonCounter && this.buttonCounter(this.counter);
+                    
+                    // this.dispatchEvent(
+                    //     new CustomEvent('test', {
+                    //         detail: {counter: this.counter},
+                    //     })
+                    // );
+                });
+            }
+            get label() {
+                return this.getAttribute('label');
+            }
+            set label(value) {
+                this.setAttribute('label', value);
+            }
+            
+            get counter() {
+                return this.getAttribute('counter');
+            }
+            set counter(value) {
+                this.setAttribute('counter', value);
+            }
+            
+            static get observedAttributes() {
+                return ['label', 'counter'];
+            }
+            attributeChangedCallback(name, oldVal, newVal) {
+                console.log('attributeChangedCallback');
+                this.render();
+            }
+            
+            render() {
+                this.$button.innerHTML = this.label;
+                this.$counter.innerHTML = `You clicked me ${this.counter} times`;
+            }
+            
+            connectedCallback() {
+                console.log('connectedCallback');
+            }
+            
+            disconnectedCallback() {
+                debugger;
+                console.log('disconnectedCallback');
+            }
+            adoptedCallback() {
+                console.log('adoptedCallback');
+            }
+        }
+        customElements.define('button-counter', ButtonCounter)
+    </script>
+</body>
+</html>
