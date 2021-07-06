@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>button-web</title>
 </head>
 <body>
     <template id="button-counter">
@@ -58,16 +58,6 @@
                 this.$button.innerHTML = this.label;
                 this.$counter.innerHTML = `You clicked me ${this.counter} times`;
             }
-            
-            connectedCallback() {
-            }
-            
-            disconnectedCallback() {
-                console.log('disconnectedCallback');
-            }
-            adoptedCallback() {
-                console.log('adoptedCallback');
-            }
         }
         customElements.define('button-counter', ButtonCounter)
     </script>
@@ -75,7 +65,7 @@
         let app = document.querySelector('#app');
         let str = '';
         
-        for(let i=0; i<100; i++) {
+        for(let i=0; i<10000; i++) {
             str+='<button-counter counter="0" label="增加1"></button-counter>';
         }
         app.innerHTML = str;

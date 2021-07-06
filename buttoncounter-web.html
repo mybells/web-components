@@ -66,17 +66,6 @@
                 this.$button.innerHTML = this.label;
                 this.$counter.innerHTML = `You clicked me ${this.counter} times`;
             }
-            
-            connectedCallback() {
-                console.log('connectedCallback');
-            }
-            
-            disconnectedCallback() {
-                console.log('disconnectedCallback');
-            }
-            adoptedCallback() {
-                console.log('adoptedCallback');
-            }
         }
         customElements.define('button-counter', ButtonCounter)
     </script>
